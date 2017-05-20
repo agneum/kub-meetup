@@ -2,37 +2,25 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/takama/router"
 )
 
 func main() {
+	logger := log.New(os.Stdout, "[step-by-step]", log.LstdFlags)
+	logger.Print("App is running..")
 	r := router.New()
 
-	a := 5
-	// r.GET("/", home)
-	// r.POST("/pampam", pampam)
-	r.POST("/api/v1/users", mw(a, abc))
-
+	r.GET("/home", home)
+	logger.Print("Ready to listening..")
 	r.Listen(":8888")
-	// http.HandleFunc("/", handler)
-	// http.ListenAndServe(":8888", nil)
 }
 
 func home(c *router.Control) {
-	fmt.Fprintf(c.Writer, "URL.Path = %q\n", c.Request.URL.Path)
-}
-
-func mw(a int, h router.Handle) router.Handle {
-	return h
-}
-
-func abc(c *router.Control) {
-	fmt.Fprintf(c.Writer, "a = ?")
-}
-
-func pampam(c *router.Control) {
+	log.Print("Home")
 	fmt.Fprintf(c.Writer, "URL.Path = %q\n", c.Request.URL.Path)
 }
 
