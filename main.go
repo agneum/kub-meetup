@@ -12,11 +12,19 @@ import (
 func main() {
 	logger := log.New(os.Stdout, "[step-by-step]", log.LstdFlags)
 	logger.Print("App is running..")
+
+	port := os.Getenv("SERVICE_PORT")
+
+	if len(port) == 0 {
+		logger.Fatal("Specify port")
+	}
+
 	r := router.New()
 
 	r.GET("/home", home)
-	logger.Print("Ready to listening..")
-	r.Listen(":8888")
+	logger.Printf("Ready to listening the port %q..", port)
+
+	r.Listen(":" + port)
 }
 
 func home(c *router.Control) {
