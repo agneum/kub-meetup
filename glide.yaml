@@ -1,0 +1,4 @@
+package: github.com/agneum/kub-meetup
+import:
+- package: github.com/takama/router
+  version: ^0.6.3
