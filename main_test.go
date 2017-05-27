@@ -6,10 +6,15 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/takama/router"
 )
 
 func TestHandler(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(handler))
+	r := router.New()
+	r.GET("/", home)
+
+	ts := httptest.NewServer(r)
 	defer ts.Close()
 
 	res, err := http.Get(ts.URL + "/")
